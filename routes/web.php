@@ -22,4 +22,4 @@ Route::get('/ola', function(){
     return 'Olá Mundo!';
 });
 
-Route::get('/series', [SeriesController::class, 'listarSeries']);
+Route::get('/series', [SeriesController::class, 'index']);
