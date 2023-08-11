@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Serie;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class SeriesController extends Controller
 {
     public function index(Request $request)
     {
         $series = Serie::query()->orderBy('nome')->get();
-        $mensagemSucesso = $request->session()->get('mensagem.sucesso');
-        $request->session()->forget('mensagem.sucesso');
+        $mensagemSucesso = session('mensagem.sucesso');
 
         return view('series.index')
             ->with('series', $series)
@@ -27,17 +26,16 @@ class SeriesController extends Controller
     public function store(Request $request)
     {
 
-        Serie::create($request->all());
-        $request->session()->put('mensagem.sucesso', 'Série adicionada com sucesso!');
+        $serie = Serie::create($request->all());
 
-        return to_route('series.index');
+        return to_route('series.index')
+            ->with("mensagem.sucesso", "Série '{$serie->nome}' adicionada com sucesso!");
     }
 
-    public function destroy(Request $request)
+    public function destroy(Serie $series)
     {
-        Serie::destroy($request->series);
-        $request->session()->put('mensagem.sucesso', 'Série removida com sucesso!');
-
-        return to_route('series.index');
+        $series->delete();
+        return to_route('series.index')
+            ->with("mensagem.sucesso", "Série '{$series->nome}' removida com sucesso!");
     }
 }
