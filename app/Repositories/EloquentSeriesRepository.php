@@ -7,7 +7,7 @@ use App\Models\Episode;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SeriesFormRequest;
 
-class SeriesRepository
+class EloquentSeriesRepository implements SeriesRepository
 {
     public function add(SeriesFormRequest $request): Series
     {
