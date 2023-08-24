@@ -26,7 +26,13 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ route('series.index') }}">Home</a>
 
+                @auth
                 <a href="{{ route('logout') }}">Sair</a>
+                @endauth
+
+                @if(Route::currentRouteName() !== 'login' && Auth::guest())
+                <a href="{{ route('login') }}">entrar</a>
+                @endif
             </div>
         </nav>
 
