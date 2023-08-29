@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SeriesFormRequest;
-use App\Mail\SeriesCreated;
 use App\Models\Series;
-use App\Models\User;
 use App\Repositories\SeriesRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class SeriesController extends Controller
 {
@@ -53,6 +50,9 @@ class SeriesController extends Controller
     public function destroy(Series $series)
     {
         $series->delete();
+        if ($series->cover) {
+            \App\Jobs\DeleteSeriesCover::dispatch($series->cover);
+        }
         return to_route('series.index')
             ->with("mensagem.sucesso", "Série '{$series->nome}' removida com sucesso!");
     }
