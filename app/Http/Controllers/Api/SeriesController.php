@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SeriesFormRequest;
 use App\Models\Series;
 use App\Repositories\SeriesRepository;
+use Illuminate\Http\Client\Request;
 
 class SeriesController extends Controller
 {
@@ -48,5 +49,10 @@ class SeriesController extends Controller
     {
         Series::destroy($series);
         return response()->noContent();
+    }
+
+    public function storeSeason(Series $series)
+    {
+        return $series->seasons;
     }
 }
