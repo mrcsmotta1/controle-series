@@ -25,17 +25,23 @@ class SeriesController extends Controller
         return response()->json($this->seriesRepository->add($request), 201);
     }
 
-    public function show(Series $series)
+    public function show(int $series)
     {
-        return $series;
+        $seriesModel = Series::find($series);
+
+        if (is_null($seriesModel)) {
+            return response()->json(['message' => 'Series not found'], 404);
+        }
+
+        return $seriesModel;
     }
 
     public function update(Series $series, SeriesFormRequest $request)
     {
-       $series->fill($request->all());
-       $series->save();
+        $series->fill($request->all());
+        $series->save();
 
-       return $series;
+        return $series;
     }
 
     public function destroy(int $series)
