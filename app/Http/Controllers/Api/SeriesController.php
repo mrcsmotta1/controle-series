@@ -24,4 +24,9 @@ class SeriesController extends Controller
     {
         return response()->json($this->seriesRepository->add($request), 201);
     }
+
+    public function show(Series $series)
+    {
+        return $series;
+    }
 }
