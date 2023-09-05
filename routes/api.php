@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('/series', SeriesController::class);
 Route::get('/series/{series}/seasons', [SeriesController::class, 'storeSeason']);
 Route::get('/series/{series}/episodes', [SeriesController::class, 'storeEpisodes']);
+Route::patch('/episodes/{episode}/watch',[SeriesController::class, 'watchEpisodes']);

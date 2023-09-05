@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SeriesFormRequest;
+use App\Models\Episode;
 use App\Models\Series;
 use App\Repositories\SeriesRepository;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
@@ -59,5 +60,13 @@ class SeriesController extends Controller
     public function storeEpisodes(Series $series)
     {
        return $series->episodes;
+    }
+
+    public function watchEpisodes(Episode $episode, Request $request)
+    {
+        $episode->watched = $request->watched;
+        $episode->save();
+
+        return $episode;
     }
 }
