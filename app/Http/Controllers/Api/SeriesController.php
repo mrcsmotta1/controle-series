@@ -37,4 +37,10 @@ class SeriesController extends Controller
 
        return $series;
     }
+
+    public function destroy(int $series)
+    {
+        Series::destroy($series);
+        return response()->noContent();
+    }
 }
