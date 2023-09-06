@@ -17,9 +17,13 @@ class SeriesController extends Controller
 
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return Series::all();
+        if (!$request->has('nome')) {
+            return Series::all();
+        }
+
+        return Series::where("nome", "like", "%{$request->nome}%")->get();
     }
 
     public function store(SeriesFormRequest $request)
@@ -59,7 +63,7 @@ class SeriesController extends Controller
 
     public function storeEpisodes(Series $series)
     {
-       return $series->episodes;
+        return $series->episodes;
     }
 
     public function watchEpisodes(Episode $episode, Request $request)
